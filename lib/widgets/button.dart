@@ -20,14 +20,15 @@ class Button extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 0.0),
       child: Container(
         width: double.infinity,
-        height: 40,
+        height:60 ,
         decoration: BoxDecoration(
           color: buttonColor,
           borderRadius: BorderRadius.circular(
-            20,
+            32,
           ),
         ),
         child: ElevatedButton(
+          
           style: ButtonStyle(
             backgroundColor: MaterialStateProperty.resolveWith<Color>(
                 (Set<MaterialState> states) {
@@ -41,7 +42,7 @@ class Button extends StatelessWidget {
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
               const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(
-                  Radius.circular(15),
+                  Radius.circular(32),
                 ),
               ),
             ),

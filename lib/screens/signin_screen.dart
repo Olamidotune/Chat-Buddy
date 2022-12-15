@@ -1,10 +1,11 @@
+import 'package:chatbuddy/constants.dart';
+import 'package:chatbuddy/screens/chat_screen.dart';
 import 'package:chatbuddy/screens/signup_screen.dart';
 import 'package:chatbuddy/widgets/button.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
-
-import '../widgets/myformfield.dart';
 
 class SignInScreen extends StatefulWidget {
   static const String routeName = 'SignInScreen';
@@ -15,9 +16,14 @@ class SignInScreen extends StatefulWidget {
 }
 
 class _SignInScreen extends State<SignInScreen> {
+  final _auth = FirebaseAuth.instance;
+  late String email;
+  late String password;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey.shade900,
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
@@ -29,63 +35,100 @@ class _SignInScreen extends State<SignInScreen> {
           ),
         ),
       ),
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 5.0.w),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(
-              'Sign In',
-              style: GoogleFonts.mulish(
-                textStyle:
-                    const TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+      body: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 5.0.w),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Hero(
+                tag: 'logo',
+                child: SizedBox(
+                  height: 20.h,
+                  child: Image.asset('assets/pngs/logo.png'),
+                ),
               ),
-            ),
-            SizedBox(
-              height: 5.h,
-            ),
-            const MyFormField(
-              myHintText: 'Phone number',
-            ),
-            SizedBox(
-              height: 2.h,
-            ),
-            const MyFormField(
-              myHintText: 'Password',
-            ),
-            SizedBox(
-              height: 2.h,
-            ),
-            Button(
-              action: 'SIGN IN',
-             buttonColor: Colors.green.shade900,
-              onPressed: () {},
-            ),
-            TextButton(
-              onPressed: () {},
-              child: Text(
-                'Forgot Password?',
-                style: GoogleFonts.mulish(),
+              Text(
+                'Sign In',
+                style: GoogleFonts.mulish(
+                  textStyle: const TextStyle(
+                      fontSize: 30, fontWeight: FontWeight.bold),
+                ),
               ),
-            ),
-            SizedBox(
-              height: 5.h,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  'Don\'t have an account?.',
+              SizedBox(
+                height: 5.h,
+              ),
+              TextFormField(
+                textAlign: TextAlign.center,
+                keyboardType: TextInputType.emailAddress,
+                textInputAction: TextInputAction.next,
+                onChanged: (value) {
+                  email = value;
+                },
+                decoration: kTextFieldDecoration.copyWith(
+                    hintText: 'E-mail/Phone number'),
+              ),
+              SizedBox(
+                height: 2.h,
+              ),
+              TextFormField(
+                textAlign: TextAlign.center,
+                obscureText: true,
+                keyboardType: TextInputType.text,
+                textInputAction: TextInputAction.done,
+                onChanged: (value) {
+                  password = value;
+                },
+                decoration: kTextFieldDecoration.copyWith(hintText: 'Password'),
+              ),
+              SizedBox(
+                height: 2.h,
+              ),
+              Button(
+                action: 'SIGN IN',
+                buttonColor: Colors.green.shade900,
+                onPressed: () async {
+                  try {
+                    final oldUser = await _auth.signInWithEmailAndPassword(
+                        email: email, password: password);
+                    if (oldUser != null) {
+                      Navigator.of(context)
+                          .popAndPushNamed(ChatScreen.routeName);
+                    }
+                  } catch (e) {
+                    print(e);
+                  }
+                },
+              ),
+              TextButton(
+                onPressed: () {},
+                child: Text(
+                  'Forgot Password?',
                   style: GoogleFonts.mulish(),
                 ),
-                TextButton(
-                     onPressed: () {
-                     Navigator.of(context).popAndPushNamed(SignUpScreen.routeName);
+              ),
+              SizedBox(
+                height: 5.h,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Don\'t have an account?.',
+                    style: GoogleFonts.mulish(),
+                  ),
+                  TextButton(
+                    child: const Text('Sign Up'),
+                    onPressed: () {
+                      Navigator.of(context)
+                          .popAndPushNamed(SignUpScreen.routeName);
                     },
-                    child: const Text('Sign Up'))
-              ],
-            ),
-          ],
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

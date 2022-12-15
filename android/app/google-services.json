@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "375365248669",
+    "project_id": "chat-buddy-523ba",
+    "storage_bucket": "chat-buddy-523ba.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:375365248669:android:2ca83422e17b9ca594d674",
+        "android_client_info": {
+          "package_name": "com.example.chatbuddy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "375365248669-80uhja45a9cmb34od7h756jeclqvbsm1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAT56Xi7t453OiffLBnqlz2-WVUMo4g21c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "375365248669-80uhja45a9cmb34od7h756jeclqvbsm1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
